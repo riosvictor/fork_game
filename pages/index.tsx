@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import React, { useEffect, useRef, useState } from 'react'
 import classnames from 'classnames'
 import { convertStringToArray, getRandonWord, initWordToDisplay } from '../server/functions'
+import Head from 'next/head'
 
 const Home: NextPage = () => {
   const maxErrors = 5
@@ -84,6 +85,11 @@ const Home: NextPage = () => {
   
   return (
     <div className="p-5 mx-10 my-5 border-solid border-2 border-gray-400">
+      <Head>
+        <title>Jogo da Forca</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+
       <h1 className="text-sky-500 font-serif text-4xl font-medium italic leading-8 text-center mt-0 mx-0 mb-12">
         Bem vindo ao Jogo da Forca
       </h1>
