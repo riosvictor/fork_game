@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import React, { useEffect, useRef, useState } from 'react'
+import classnames from 'classnames'
 import { convertStringToArray, getRandonWord, initWordToDisplay } from '../server/functions'
 
 const Home: NextPage = () => {
@@ -82,77 +83,111 @@ const Home: NextPage = () => {
   ///
   
   return (
-    <div className="p-10">
+    <div className="p-5 mx-10 my-5 border-solid border-2 border-gray-400">
       <h1 className="text-sky-500 font-serif text-4xl font-medium italic leading-8 text-center mt-0 mx-0 mb-12">
         Bem vindo ao Jogo da Forca
       </h1>
 
-      <div className="flex flex-row gap-10 mb-20 content-center justify-center">
-        {getUserWord.map((letter, index) => {
-          return (
-            <div 
-              key={index}
-              className="text-6xl font-medium leading-4 font-sans text-slate-700"
-            >
-              {letter}
-            </div>
-          )
-        })}
-      </div>
-
-      <div className="flex flex-col mb-10 items-center">
-        {
-          !finishGame ? 
-          (
-            <>
-              <input 
-                type="text" 
-                maxLength={1} 
-                placeholder="Escreva uma letra..."
-                value={userLetter}
-                onChange={(event) => handleUserLetter(event)}
-                onKeyDown={(event) => handleKeyDown(event)}
-                ref={inputEl}
-                className="placeholder:italic placeholder:text-slate-400 block bg-white
-                          w-full border border-slate-300 rounded-md py-2 pl-9 pr-3
-                          shadow-sm focus:outline-none focus:border-sky-500
-                          focus:ring-sky-500 focus:ring-1 text-6xl mb-10"
-              />
-
-              <button 
-                className="rounded-full bg-indigo-500 w-[120px] h-[40px] disabled:opacity-50 hover:opacity-90 font-medium text-white text-2xl"
-                onClick={() => doKick()}
-                disabled={finishGame}
+      <main className="border-double border-4 border-indigo-600 p-5 mb-5">
+        <div className="flex flex-row gap-[5%] md:mb-20 mb-10 content-center justify-center">
+          {getUserWord.map((letter, index) => {
+            return (
+              <div 
+                key={index}
+                className="md:text-6xl text-2xl font-medium leading-4 font-sans text-slate-700"
               >
-                Chutar
-              </button>
-            </>
-          ) :
-          (
-            <>
-              {isAssertAll ? 
-                <p>Parabéns, você acertou a palavra completa!</p>
-                :
-                <p>Que pena, você foi enforcado. 
-                  A palavra era &apos;{getSecretWord.join('')}&apos;
-                </p>
-              }
-              <button 
-                className="rounded-full bg-indigo-500 w-[220px] h-[40px] disabled:opacity-50 hover:opacity-90 font-medium text-white text-2xl mt-10"
-                onClick={() => setRestart(!restart)}
-              >
-                Reiniciar o jogo
-              </button>
-            </>
-          )
-        }
-      </div>
+                {letter}
+              </div>
+            )
+          })}
+        </div>
 
+        <div className="flex flex-col items-center space-y-5">
+          {
+            !finishGame ? 
+            (
+              <>
+                <input 
+                  type="text" 
+                  maxLength={1} 
+                  placeholder="Escreva uma letra..."
+                  value={userLetter}
+                  onChange={(event) => handleUserLetter(event)}
+                  onKeyDown={(event) => handleKeyDown(event)}
+                  ref={inputEl}
+                  className="placeholder:italic placeholder:text-slate-400 block bg-white
+                            w-full border border-slate-300 rounded-md p-2
+                            shadow-sm focus:outline-none focus:border-sky-500
+                            focus:ring-sky-500 focus:ring-1 text-2xl md:text-6xl"
+                />
+
+                <button 
+                  className="px-4 py-2 font-semibold text-2xl rounded-full bg-indigo-500
+                            text-white rounded-md shadow-sm ring-1 ring-slate-900/5
+                            border-2 border-solid disabled:opacity-50 hover:opacity-90"
+                  onClick={() => doKick()}
+                  disabled={finishGame}
+                >
+                  Chutar
+                </button>
+              </>
+            ) :
+            (
+              <>
+                {isAssertAll ? 
+                  <p className="underline decoration-green-500 text-xl">
+                    Parabéns, você acertou a palavra completa!
+                  </p>
+                  :
+                  <p className="text-xl">
+                    <span className="underline decoration-pink-500">Que pena, você foi enforcado.</span> 
+                    {` A palavra era `}
+                    <span className="text-pink-500 font-medium text-lg">
+                      &apos;{getSecretWord.join('')}&apos;
+                    </span>. 
+                  </p>
+                }
+                <button 
+                  className="px-4 py-2 font-semibold text-2xl rounded-full bg-indigo-500
+                  text-white rounded-md shadow-sm ring-1 ring-slate-900/5
+                  border-2 border-solid disabled:opacity-50 hover:opacity-90"
+                  onClick={() => setRestart(!restart)}
+                >
+                  Reiniciar o jogo
+                </button>
+              </>
+            )
+          }
+        </div>
+
+      </main>
+
+      
       <div className="flex flex-col text-2xl">
-        <p className="font-bold underline mb-10">Informações da partida</p>
-        <p className="font-light">{`Letras erradas: ${getWrongLetters.length > 0 ? getWrongLetters : 0}`}</p>
-        <p className="font-light">{`Tentativas erradas: ${countAllErrors}`}</p>
-        <p className="font-light">{`Limite de erros: ${maxErrors}`}</p>
+        <p className="font-bold underline mb-5">Informações da partida</p>
+        <p className="font-light">{`Letras erradas: `} 
+          <span className="font-bold text-yellow-500">
+            {`${getWrongLetters.length > 0 ? `[${getWrongLetters}]` : 0}`}
+          </span>
+        </p>
+        <p className="font-light">{`Tentativas erradas: `}
+          <span className={
+            classnames("font-bold", 
+              {"text-green-600": countAllErrors === 1 },
+              {"text-emerald-600": countAllErrors === 2 },
+              {"text-yellow-500": countAllErrors === 3 },
+              {"text-orange-500": countAllErrors === 4 },
+              {"text-red-600": countAllErrors === 5 },
+            )}
+          >
+            {`${countAllErrors}`}
+          </span>
+        </p>
+        <p className="font-light">{`Limite de erros: `}
+          <span className="font-bold">
+            {`${maxErrors}`}
+          </span>
+        </p>
       </div>
       
     </div>
