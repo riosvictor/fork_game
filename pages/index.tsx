@@ -12,6 +12,7 @@ const Home: NextPage = () => {
   const [countAllErrors, setAllErrors] = useState(0)
   const [userLetter, setUserLetter] = useState('')
   const [restart, setRestart] = useState(false)
+  const [isDark, setDark] = useState(false)
   const inputEl = useRef<HTMLInputElement>(null);
 
   const finishGame = countAllErrors === maxErrors || !getUserWord.includes('_')
@@ -84,15 +85,63 @@ const Home: NextPage = () => {
   ///
   
   return (
-    <div className="p-5 mx-10 my-5 border-solid border-2 border-gray-400 rounded-md">
+    <div className={
+      classnames(
+        "p-5 mx-10 my-5 border-solid border-2 border-gray-400 rounded-md",
+        {
+          "bg-stone-900": isDark
+        }
+      )}
+    >
       <Head>
         <title>Jogo da Forca</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <h1 className="text-sky-500 font-serif text-4xl font-medium italic leading-8 text-center mt-0 mx-0 mb-12">
+      <h1 className="text-indigo-500 font-serif text-4xl font-medium italic leading-8 text-center mt-0 mx-0 mb-12">
         Bem vindo ao Jogo da Forca
       </h1>
+
+      <div className="flex justify-end items-center gap-2">
+        <span
+          className={
+            classnames(
+              {
+                "text-white": isDark
+              }
+            )}
+        >
+          Dark Mode
+        </span>
+        <label className="m-2 relative inline-block w-[60px] h-[34px]">
+          <input 
+            type="checkbox" 
+            className="opacity-0 w-0 h-0 
+                        "
+            checked={isDark}
+            onChange={() => setDark(!isDark)} 
+          />
+          <span className={classnames(
+            `absolute cursor-pointer inset-0 duration-[.4s] rounded-[34px]
+            before:absolute before:content-[''] before:h-[26px] before:w-[26px] before:left-[4px]
+            before:bottom-[4px] before:duration-[.4s] before:bg-white before:rounded-[50%]
+            hover:shadow-lg`,
+            {
+              "before:translate-x-[26px]": isDark
+            },
+            {
+              "bg-indigo-500 hover:shadow-indigo-500/50": isDark
+            },
+            {
+              "bg-slate-400 hover:shadow-slate-400/50": !isDark
+            }
+          )}
+          >
+
+          </span>
+        </label>
+      </div>
+      
 
       <main className="border-double border-4 border-indigo-600 p-5 mb-5 rounded-md">
         <div className="flex flex-row gap-[5%] md:mb-20 mb-10 content-center justify-center">
@@ -100,7 +149,16 @@ const Home: NextPage = () => {
             return (
               <div 
                 key={index}
-                className="md:text-6xl text-2xl font-medium leading-4 font-sans text-slate-700"
+                className={
+                  classnames(
+                    "md:text-6xl text-2xl font-medium leading-4 font-sans",
+                    {
+                      "text-white": isDark
+                    },
+                    {
+                      "text-slate-700": !isDark
+                    }
+                  )}                
               >
                 {letter}
               </div>
@@ -141,12 +199,28 @@ const Home: NextPage = () => {
             (
               <>
                 {isAssertAll ? 
-                  <p className="underline decoration-green-500 text-xl">
+                  <p 
+                    className={
+                      classnames(
+                        "underline decoration-green-500 text-xl",
+                        {
+                          "text-white": isDark
+                        }
+                      )}
+                  >
                     Parabéns, você acertou a palavra completa!
                   </p>
                   :
-                  <p className="text-xl">
-                    <span className="underline decoration-pink-500">Que pena, você foi enforcado.</span> 
+                  <p 
+                    className={
+                      classnames(
+                        "text-xl",
+                        {
+                          "text-white": isDark
+                        }
+                      )}
+                  >
+                    <span className="underline decoration-pink-500">Que pena, você foi enforcado(a).</span> 
                     {` A palavra era `}
                     <span className="text-pink-500 font-medium text-lg">
                       &apos;{getSecretWord.join('')}&apos;
@@ -170,13 +244,40 @@ const Home: NextPage = () => {
 
       
       <div className="flex flex-col text-2xl">
-        <p className="font-bold underline mb-5">Informações da partida</p>
-        <p className="font-light">{`Letras erradas: `} 
+        <p 
+          className={
+            classnames(
+              "font-bold underline decoration-indigo-500 mb-5",
+              {
+                "text-white": isDark
+              }
+            )}
+        >
+          Informações da partida</p>
+        <p 
+          className={
+            classnames(
+              "font-light",
+              {
+                "text-white": isDark
+              }
+            )}
+        >
+          {`Letras erradas: `} 
           <span className="font-bold text-yellow-500">
             {`${getWrongLetters.length > 0 ? `[${getWrongLetters}]` : 0}`}
           </span>
         </p>
-        <p className="font-light">{`Tentativas erradas: `}
+        <p 
+          className={
+            classnames(
+              "font-light",
+              {
+                "text-white": isDark
+              }
+            )}
+        >
+          {`Tentativas erradas: `}
           <span className={
             classnames("font-bold", 
               {"text-green-600": countAllErrors === 1 },
@@ -189,7 +290,16 @@ const Home: NextPage = () => {
             {`${countAllErrors}`}
           </span>
         </p>
-        <p className="font-light">{`Limite de erros: `}
+        <p 
+          className={
+            classnames(
+              "font-light",
+              {
+                "text-white": isDark
+              }
+            )}
+        >
+          {`Limite de erros: `}
           <span className="font-bold">
             {`${maxErrors}`}
           </span>
