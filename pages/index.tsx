@@ -84,7 +84,7 @@ const Home: NextPage = () => {
   ///
   
   return (
-    <div className="p-5 mx-10 my-5 border-solid border-2 border-gray-400">
+    <div className="p-5 mx-10 my-5 border-solid border-2 border-gray-400 rounded-md">
       <Head>
         <title>Jogo da Forca</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -94,7 +94,7 @@ const Home: NextPage = () => {
         Bem vindo ao Jogo da Forca
       </h1>
 
-      <main className="border-double border-4 border-indigo-600 p-5 mb-5">
+      <main className="border-double border-4 border-indigo-600 p-5 mb-5 rounded-md">
         <div className="flex flex-row gap-[5%] md:mb-20 mb-10 content-center justify-center">
           {getUserWord.map((letter, index) => {
             return (
@@ -129,7 +129,7 @@ const Home: NextPage = () => {
 
                 <button 
                   className="px-4 py-2 font-semibold text-2xl rounded-full bg-indigo-500
-                            text-white rounded-md shadow-sm ring-1 ring-slate-900/5
+                            text-white shadow-sm ring-1 ring-slate-900/5
                             border-2 border-solid disabled:opacity-50 hover:opacity-90"
                   onClick={() => doKick()}
                   disabled={finishGame}
