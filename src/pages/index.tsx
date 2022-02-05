@@ -1,8 +1,11 @@
-import type { NextPage } from 'next'
 import React, { useEffect, useRef, useState } from 'react'
-import classnames from 'classnames'
-import { convertStringToArray, getRandonWord, initWordToDisplay } from '../server/functions'
+import type { NextPage } from 'next'
 import Head from 'next/head'
+import classnames from 'classnames'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
+import { convertStringToArray, getRandonWord, initWordToDisplay } from '../server/functions'
 import Toggle from '../components/Toggle'
 import HideLetter from '../components/HideLetter'
 import ButtonAction from '../components/ButtonAction'
@@ -52,14 +55,14 @@ const Home: NextPage = () => {
         }
       })
 
-      alert('Você acertou!')
+      toast('Você acertou!')
     } else {
       setWrongLetters(oldLetters => {
         return [...oldLetters, userLetter]
       })
       setAllErrors(countAllErrors + 1)
 
-      alert('Você errou!')
+      toast('Você errou!')
     }
 
     setUserLetter('')
@@ -99,6 +102,8 @@ const Home: NextPage = () => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
+      <ToastContainer />
+
       <h1 className="text-indigo-500 font-serif text-4xl font-medium italic leading-8 text-center mt-0 mx-0 mb-12">
         Bem vindo ao Jogo da Forca
       </h1>
@@ -121,7 +126,7 @@ const Home: NextPage = () => {
       <main className="border-double border-4 border-indigo-600 p-5 mb-5 rounded-md">
         <div className="flex flex-row gap-[5%] md:mb-20 mb-10 content-center justify-center">
           {getUserWord.map((letter, index) => 
-            <HideLetter key={index}> {letter} </HideLetter>
+            <HideLetter key={index} isDark={isDark}> {letter} </HideLetter>
           )}
         </div>
 

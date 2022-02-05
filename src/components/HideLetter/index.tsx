@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 interface IProps { 
-  isDark?: boolean;
+  isDark: boolean;
 }
 
 const HideLetter: React.FC<IProps> = ({isDark, children}) => {
