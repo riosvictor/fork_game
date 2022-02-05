@@ -3,6 +3,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import classnames from 'classnames'
 import { convertStringToArray, getRandonWord, initWordToDisplay } from '../server/functions'
 import Head from 'next/head'
+import Toggle from '../components/Toggle'
+import HideLetter from '../components/HideLetter'
+import ButtonAction from '../components/ButtonAction'
 
 const Home: NextPage = () => {
   const maxErrors = 5
@@ -31,8 +34,7 @@ const Home: NextPage = () => {
   }, [restart])
 
 
-  ///
-
+  /// functions
   function doKick() {
     const acertouLetra = getSecretWord.includes(userLetter.toLowerCase())
 
@@ -82,12 +84,11 @@ const Home: NextPage = () => {
     }
   }
 
-  ///
-  
+  /// page
   return (
     <div className={
       classnames(
-        "p-5 mx-10 my-5 border-solid border-2 border-gray-400 rounded-md",
+        "p-5 m-1 my-5 border-solid border-2 border-gray-400 rounded-md",
         {
           "bg-stone-900": isDark
         }
@@ -113,57 +114,15 @@ const Home: NextPage = () => {
         >
           Dark Mode
         </span>
-        <label className="m-2 relative inline-block w-[60px] h-[34px]">
-          <input 
-            type="checkbox" 
-            className="opacity-0 w-0 h-0 
-                        "
-            checked={isDark}
-            onChange={() => setDark(!isDark)} 
-          />
-          <span className={classnames(
-            `absolute cursor-pointer inset-0 duration-[.4s] rounded-[34px]
-            before:absolute before:content-[''] before:h-[26px] before:w-[26px] before:left-[4px]
-            before:bottom-[4px] before:duration-[.4s] before:bg-white before:rounded-[50%]
-            hover:shadow-lg`,
-            {
-              "before:translate-x-[26px]": isDark
-            },
-            {
-              "bg-indigo-500 hover:shadow-indigo-500/50": isDark
-            },
-            {
-              "bg-slate-400 hover:shadow-slate-400/50": !isDark
-            }
-          )}
-          >
-
-          </span>
-        </label>
+        <Toggle isActive={isDark} setValue={setDark} />
       </div>
       
 
       <main className="border-double border-4 border-indigo-600 p-5 mb-5 rounded-md">
         <div className="flex flex-row gap-[5%] md:mb-20 mb-10 content-center justify-center">
-          {getUserWord.map((letter, index) => {
-            return (
-              <div 
-                key={index}
-                className={
-                  classnames(
-                    "md:text-6xl text-2xl font-medium leading-4 font-sans",
-                    {
-                      "text-white": isDark
-                    },
-                    {
-                      "text-slate-700": !isDark
-                    }
-                  )}                
-              >
-                {letter}
-              </div>
-            )
-          })}
+          {getUserWord.map((letter, index) => 
+            <HideLetter key={index}> {letter} </HideLetter>
+          )}
         </div>
 
         <div className="flex flex-col items-center space-y-5">
@@ -185,15 +144,11 @@ const Home: NextPage = () => {
                             focus:ring-sky-500 focus:ring-1 text-2xl md:text-6xl"
                 />
 
-                <button 
-                  className="px-4 py-2 font-semibold text-2xl rounded-full bg-indigo-500
-                            text-white shadow-sm ring-1 ring-slate-900/5
-                            border-2 border-solid disabled:opacity-50 hover:opacity-90"
+                <ButtonAction 
                   onClick={() => doKick()}
                   disabled={finishGame}
-                >
-                  Chutar
-                </button>
+                  labelButton="Chutar"
+                />
               </>
             ) :
             (
@@ -227,14 +182,10 @@ const Home: NextPage = () => {
                     </span>. 
                   </p>
                 }
-                <button 
-                  className="px-4 py-2 font-semibold text-2xl rounded-full bg-indigo-500
-                  text-white rounded-md shadow-sm ring-1 ring-slate-900/5
-                  border-2 border-solid disabled:opacity-50 hover:opacity-90"
+                <ButtonAction 
                   onClick={() => setRestart(!restart)}
-                >
-                  Reiniciar o jogo
-                </button>
+                  labelButton="Reiniciar o jogo"
+                />
               </>
             )
           }
