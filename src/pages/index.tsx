@@ -55,14 +55,14 @@ const Home: NextPage = () => {
         }
       })
 
-      toast('Você acertou!')
+      toast('Você acertou!', {type: 'success'})
     } else {
       setWrongLetters(oldLetters => {
         return [...oldLetters, userLetter]
       })
       setAllErrors(countAllErrors + 1)
 
-      toast('Você errou!')
+      toast('Você errou!', {type: 'error'})
     }
 
     setUserLetter('')
@@ -77,7 +77,7 @@ const Home: NextPage = () => {
     if(isValid) {
       setUserLetter(value)
     } else {
-      alert('Informe uma letra válida!')
+      toast('Informe uma letra válida!', {type: 'warning'})
     }
   }
 
