@@ -44,7 +44,9 @@ const Home: NextPage = () => {
       return
     }
 
-    const alreadyUsed = getUserWord.includes(userLetter) || getWrongLetters.includes(userLetter)
+    const userLetterValid = userLetter.toLowerCase()
+
+    const alreadyUsed = getUserWord.includes(userLetterValid) || getWrongLetters.includes(userLetterValid)
     if (alreadyUsed) {
       toast('Essa letra já foi usada!', {type: 'warning'})
       setUserLetter('')
@@ -52,11 +54,11 @@ const Home: NextPage = () => {
       return
     }
     
-    const acertouLetra = getSecretWord.includes(userLetter.toLowerCase())
+    const acertouLetra = getSecretWord.includes(userLetterValid)
 
     if (acertouLetra){
       getSecretWord.forEach((letra, index) => {
-        if (userLetter.toLowerCase() === letra.toLowerCase()){
+        if (userLetterValid === letra.toLowerCase()){
           setUserWord(oldLetters => {
             const newArray = [...oldLetters]
 
@@ -71,7 +73,7 @@ const Home: NextPage = () => {
       toast('Você acertou!', {type: 'success'})
     } else {
       setWrongLetters(oldLetters => {
-        return [...oldLetters, userLetter]
+        return [...oldLetters, userLetterValid]
       })
       setAllErrors(countAllErrors + 1)
 
@@ -84,12 +86,6 @@ const Home: NextPage = () => {
 
   function handleUserLetter(event: React.ChangeEvent<HTMLInputElement>) {
     const {value} = event.target
-
-    if (!value) {
-      toast('Informe uma letra!', {type: 'warning'})
-      return
-    }
-
     const isValid = !/[^a-z]/i.test(value);
 
     if(isValid) {
