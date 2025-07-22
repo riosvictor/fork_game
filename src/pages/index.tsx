@@ -105,6 +105,7 @@ const Home: NextPage = () => {
   return (
     <div className={
       classnames(
+        "min-h-screen flex flex-col justify-between",
         "p-5 m-1 my-5 border-solid border-2 border-gray-400 rounded-md",
         {
           "bg-stone-900": isDark
