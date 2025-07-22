@@ -39,6 +39,19 @@ const Home: NextPage = () => {
 
   /// functions
   function doKick() {
+    if (!userLetter) {
+      toast('Digite uma letra antes de chutar.', {type: 'warning'})
+      return
+    }
+
+    const alreadyUsed = getUserWord.includes(userLetter) || getWrongLetters.includes(userLetter)
+    if (alreadyUsed) {
+      toast('Essa letra já foi usada!', {type: 'warning'})
+      setUserLetter('')
+      inputEl.current?.focus();
+      return
+    }
+    
     const acertouLetra = getSecretWord.includes(userLetter.toLowerCase())
 
     if (acertouLetra){
@@ -71,6 +84,11 @@ const Home: NextPage = () => {
 
   function handleUserLetter(event: React.ChangeEvent<HTMLInputElement>) {
     const {value} = event.target
+
+    if (!value) {
+      toast('Informe uma letra!', {type: 'warning'})
+      return
+    }
 
     const isValid = !/[^a-z]/i.test(value);
 
