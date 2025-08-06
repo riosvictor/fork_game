@@ -138,6 +138,7 @@ const Home: NextPage = () => {
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content={isDark ? "#1e293b" : "#6366f1"} />
+        <meta name="description" content="Jogo da Forca - Descubra a palavra secreta antes que seja tarde!" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="apple-touch-icon" href="/game-icon.svg" />
       </Head>
