@@ -8,6 +8,14 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+#__next {
+  height: 100%;
+  width: 100%;
 }
 
 a {
@@ -17,4 +25,139 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+/* Melhorias específicas para dispositivos móveis */
+@media screen and (max-width: 768px) {
+  html {
+    /* Evita redimensionamento quando o teclado aparece */
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height - suporte moderno */
+    height: -webkit-fill-available;
+  }
+  
+  body {
+    height: 100vh;
+    height: 100dvh;
+    height: -webkit-fill-available;
+    /* Evita zoom no iOS quando focando em inputs */
+    -webkit-text-size-adjust: 100%;
+    /* Evita bounce scroll no iOS */
+    overscroll-behavior: none;
+  }
+  
+  /* Container principal responsivo */
+  .mobile-container {
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Área de conteúdo flexível */
+  .mobile-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+  
+  /* Input com melhor usabilidade mobile */
+  .mobile-input {
+    font-size: 16px !important; /* Evita zoom automático no iOS */
+    transform: none !important;
+    zoom: 1 !important;
+  }
+  
+  /* Reduz espaçamentos em telas pequenas */
+  .mobile-spacing {
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Header compacto no mobile */
+  .mobile-header {
+    padding-top: max(env(safe-area-inset-top), 1rem);
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* Stats compactas */
+  .mobile-stats {
+    margin-top: auto;
+    margin-bottom: env(safe-area-inset-bottom, 1rem);
+  }
+}
+
+/* Suporte para landscape no mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .mobile-container {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  
+  .mobile-header h1 {
+    font-size: 2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .mobile-header p {
+    font-size: 0.875rem !important;
+  }
+  
+  .mobile-spacing {
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+/* CSS para detectar teclado virtual */
+@media (max-height: 500px) and (max-width: 768px) {
+  .keyboard-open .mobile-header {
+    display: none; /* Esconde header quando teclado está aberto */
+  }
+  
+  .keyboard-open .mobile-stats {
+    display: none; /* Esconde stats quando teclado está aberto */
+  }
+  
+  .keyboard-open .mobile-content {
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* Animações suaves */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bounce-in {
+  animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Utilitários para controle de viewport */
+.viewport-height {
+  height: 100vh;
+  height: 100dvh;
+  height: -webkit-fill-available;
+}
+
+.safe-area-padding {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }

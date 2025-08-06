@@ -8,27 +8,26 @@ interface IProps {
 
 const Toggle: React.FC<IProps> = ({isActive, setValue}) => {
   return (
-    <label className="m-2 relative inline-block w-[60px] h-[34px]">
+    <label className="relative inline-block w-[60px] h-[34px] cursor-pointer">
       <input 
         type="checkbox" 
-        className="opacity-0 w-0 h-0 
-                    "
+        className="opacity-0 w-0 h-0"
         checked={isActive}
         onChange={() => setValue(!isActive)} 
       />
       <span className={classNames(
-        `absolute cursor-pointer inset-0 duration-[.4s] rounded-[34px]
+        `absolute inset-0 rounded-full transition-all duration-300 ease-in-out
         before:absolute before:content-[''] before:h-[26px] before:w-[26px] before:left-[4px]
-        before:bottom-[4px] before:duration-[.4s] before:bg-white before:rounded-[50%]
-        hover:shadow-lg`,
+        before:bottom-[4px] before:transition-all before:duration-300 before:bg-white before:rounded-full
+        before:shadow-md hover:shadow-lg transform hover:scale-105`,
         {
           "before:translate-x-[26px]": isActive
         },
         {
-          "bg-indigo-500 hover:shadow-indigo-500/50": isActive
+          "bg-gradient-to-r from-purple-500 to-indigo-600 shadow-purple-500/30": isActive
         },
         {
-          "bg-slate-400 hover:shadow-slate-400/50": !isActive
+          "bg-gray-300 shadow-gray-300/30": !isActive
         }
       )}
       >
