@@ -9,6 +9,7 @@ import { convertStringToArray, getRandonWord, initWordToDisplay } from '../serve
 import Toggle from '../components/Toggle'
 import HideLetter from '../components/HideLetter'
 import ButtonAction from '../components/ButtonAction'
+import GameIcon from '../components/GameIcon'
 
 const Home: NextPage = () => {
   const maxErrors = 5
@@ -137,6 +138,8 @@ const Home: NextPage = () => {
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content={isDark ? "#1e293b" : "#6366f1"} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="apple-touch-icon" href="/game-icon.svg" />
       </Head>
 
       <ToastContainer 
@@ -162,15 +165,18 @@ const Home: NextPage = () => {
             "mb-2": isKeyboardOpen
           }
         )}>
-          <h1 className={classnames(
-            "text-3xl sm:text-4xl md:text-6xl font-bold bg-gradient-to-r bg-clip-text text-transparent mb-2 md:mb-4",
-            {
-              "from-purple-400 to-pink-400": isDark,
-              "from-indigo-600 to-purple-600": !isDark
-            }
-          )}>
-            🎮 Jogo da Forca
-          </h1>
+          <div className="flex items-center justify-center mb-2 md:mb-4">
+            <GameIcon size={48} className="mr-3 md:mr-4" />
+            <h1 className={classnames(
+              "text-3xl sm:text-4xl md:text-6xl font-bold bg-gradient-to-r bg-clip-text text-transparent",
+              {
+                "from-purple-400 to-pink-400": isDark,
+                "from-indigo-600 to-purple-600": !isDark
+              }
+            )}>
+              Jogo da Forca
+            </h1>
+          </div>
           <p className={classnames(
             "text-sm sm:text-lg md:text-xl opacity-80",
             {
